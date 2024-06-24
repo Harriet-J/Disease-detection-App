@@ -28,9 +28,13 @@ def load_model(model_path):
         raise RuntimeError(f"Failed to load the model from {model_path}. Error: {e}")
 
 # Loading the saved models
-diabetes_model = load_model(diabetes_model_path)
-heart_disease_model = load_model(heart_disease_model_path)
-parkinsons_model = load_model(parkinsons_model_path)
+try:
+    diabetes_model = load_model(diabetes_model_path)
+    heart_disease_model = load_model(heart_disease_model_path)
+    parkinsons_model = load_model(parkinsons_model_path)
+except Exception as e:
+    st.error(f"Error loading models: {e}")
+    st.stop()
 
 # Sidebar for navigation
 with st.sidebar:
@@ -190,19 +194,3 @@ if selected == "Parkinsons Prediction":
         PPE = st.text_input('PPE')
 
     # Code for Prediction
-    parkinsons_diagnosis = ''
-
-    # Creating a button for Prediction
-    if st.button("Parkinson's Test Result"):
-        user_input = [fo, fhi, flo, Jitter_percent, Jitter_Abs, RAP, PPQ, DDP, Shimmer, Shimmer_dB, APQ3, APQ5, APQ, DDA, NHR, HNR, RPDE, DFA, spread1, spread2, D2, PPE]
-        try:
-            user_input = [float(x) for x in user_input]
-            parkinsons_prediction = parkinsons_model.predict([user_input])
-            if parkinsons_prediction[0] == 1:
-                parkinsons_diagnosis = "This person has Parkinson's disease"
-            else:
-                parkinsons_diagnosis = "This person does not have Parkinson's disease"
-        except ValueError:
-            parkinsons_diagnosis = 'Please enter valid numerical values.'
-
-    st.success(parkinsons_diagnosis)
