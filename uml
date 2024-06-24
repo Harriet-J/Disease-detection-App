@@ -1,0 +1,35 @@
++-----------------+
+|    DataLoader   |
++-----------------+
+| - data: DataFrame  |
+| - target: str    |
++-----------------+
+| + load_data(file_path: str): DataFrame |
+| + preprocess_data(data: DataFrame): Tuple[DataFrame, DataFrame] |
++-----------------+
+
+           |
+           v
+           
++-----------------------------+
+|   LogisticRegressionModel   |
++-----------------------------+
+| - model: LogisticRegression |
++-----------------------------+
+| + train(X: DataFrame, y: Series): None |
+| + predict(X: DataFrame): Series |
+| + evaluate(X: DataFrame, y: Series): float |
++-----------------------------+
+
+           |
+           v
+           
++-------------------+
+|     Evaluator     |
++-------------------+
+| + calculate_accuracy(y_true: Series, y_pred: Series): float |
+| + generate_classification_report(y_true: Series, y_pred: Series): str |
+| + plot_confusion_matrix(y_true: Series, y_pred: Series): None |
++-------------------+
+
+
